@@ -1,30 +1,25 @@
 import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
+
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Lazy load pages for better performance
+// Lazy loading pages for better performance
 const HomeScreen = React.lazy(() => import('../pages/HomeScreen'));
 const Authentication = React.lazy(() => import('../pages/Authentication'));
 
-function App() {
+const App = () => {
   // Set up react-query client with custom options
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: 1,
-        refetchOnWindowFocus: false,
-      },
-    },
-  });
+  const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" element={<HomeScreen />} />
+          <Route path="/*" element={<HomeScreen />} />
           <Route path="/auth" element={<Authentication />} />
         </Routes>
       </Suspense>
@@ -34,6 +29,6 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
-}
+};
 
 export default App;
