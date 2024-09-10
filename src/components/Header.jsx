@@ -80,6 +80,7 @@ const Header = () => {
                     </React.Fragment>
                 )}
             </AnimatePresence>
+            
         </header>
     )
 }
